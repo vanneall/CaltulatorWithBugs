@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun infixToPostfix(infixExpression: String): String {
+    fun infixToPostfix(infixExpression: String): String {
         val output = StringBuilder()
         val stack = Stack<Char>()
 
@@ -114,20 +114,20 @@ class MainActivity : AppCompatActivity() {
         return output.toString()
     }
 
-    private fun evaluatePostfixExpression(postfixExpression: String): Int {
+    fun evaluatePostfixExpression(postfixExpression: String): Int {
         val stack = Stack<Int>()
 
-        for (token in postfixExpression.split("\\s".toRegex())) {
-            if (token.matches("[0-9]+".toRegex())) {
-                stack.push(token.toInt())
-            } else if (token in "+-*/") {
-                val operand2 = stack.pop()
-                val operand1 = stack.pop()
-                when (token) {
-                    "+" -> stack.push(operand1 + operand2)
-                    "-" -> stack.push(operand1 - operand2)
-                    "*" -> stack.push(operand1 * operand2)
-                    "/" -> stack.push(operand1 / operand2)
+        for (i in postfixExpression) {
+            if (i - '0' in 0..9) {
+                stack.push(i - '0')
+            } else {
+                val a = stack.pop()
+                val b = stack.pop()
+                when(i) {
+                    '+' -> stack.push(b+a)
+                    '*' -> stack.push(b*a)
+                    '-' -> stack.push(b-a)
+                    '/' -> stack.push(b/a)
                 }
             }
         }
