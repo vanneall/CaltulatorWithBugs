@@ -11,6 +11,8 @@ class MainActivity : AppCompatActivity() {
 
     private var boolean: Boolean = false
 
+    private var counter = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -82,12 +84,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.opEq.setOnClickListener {
-            binding.expression.text =
-                evaluatePostfixExpression(infixToPostfix(binding.expression.text.toString())).toString()
+        binding.opAc.setOnClickListener {
+            binding.expression.text = ""
         }
 
-        binding.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.opEq.setOnClickListener {
+            Thread.sleep(counter * 1000L)
+            binding.expression.text =
+                evaluatePostfixExpression(infixToPostfix(binding.expression.text.toString())).toString()
+            counter++
+        }
+
+        binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
             boolean = isChecked
         }
     }
