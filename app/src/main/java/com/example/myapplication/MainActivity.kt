@@ -9,6 +9,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private var boolean: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -68,15 +70,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.save.setOnClickListener {
-            val a = 1 / 0
+            if (!boolean) {
+                val a = 1 / 0
+            }
+
         }
 
         binding.load.setOnClickListener {
-            val a = 1 / 0
+            if (!boolean) {
+                val a = 1 / 0
+            }
         }
 
         binding.opEq.setOnClickListener {
-            binding.expression.text = evaluatePostfixExpression(infixToPostfix(binding.expression.text.toString())).toString()
+            binding.expression.text =
+                evaluatePostfixExpression(infixToPostfix(binding.expression.text.toString())).toString()
+        }
+
+        binding.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            boolean = isChecked
         }
     }
 
@@ -123,11 +135,11 @@ class MainActivity : AppCompatActivity() {
             } else {
                 val a = stack.pop()
                 val b = stack.pop()
-                when(i) {
-                    '+' -> stack.push(b+a)
-                    '*' -> stack.push(b*a)
-                    '-' -> stack.push(b-a)
-                    '/' -> stack.push(b/a)
+                when (i) {
+                    '+' -> stack.push(b + a)
+                    '*' -> stack.push(b * a)
+                    '-' -> stack.push(b - a)
+                    '/' -> stack.push(b / a)
                 }
             }
         }
